@@ -1,0 +1,31 @@
+<div class="col-md-6">
+    <h2> User Details</h2>
+    <h3>{{errorMsg}}</h3>
+    <table class="table table-striped">
+      <thead>
+      <tr>
+        <th class="hidden"></th>
+        <th>userId</th>
+        <th>userName</th>
+        <th>userGender</th>
+        <th>userEmailId</th>
+        <th>userPhoneNumber</th>
+        <th>userPassword</th>
+        <th>userStatus</th>
+      </tr>
+    </thead>
+      <tbody>
+      <tr *ngFor="let user of users">
+        <td class="hidden"></td>
+        <td>{{user.userId}}</td>
+        <td>{{user.userName}}</td>
+        <td>{{user.userGender}}</td>
+        <td>{{user.userEmailId}}</td>
+        <td>{{user.userPhoneNumber}}</td>
+        <td>{{user.userStatus}}</td>
+        <td></td>
+        </tr>
+        
+      </tbody>
+    </table>
+    </div>
