@@ -34,13 +34,40 @@ public class UserDaoImpl implements UserDao {
 			return (User) query.uniqueResult();
 
 		} catch (Exception e) {
+			e.printStackTrace();
 			return null;
 		}
 
 	}
 
-	public boolean validUser(User user) {
-		return true;
+	public User validUser(String useremailId,  String password ){
+		long number;
+		User user;
+		try {
+
+			Session session = sessionFactory.getCurrentSession();
+			
+					try {
+						number=Long.parseLong(useremailId);
+						Query query = session.createQuery("from User where (userPhoneNumber= :username and userPassword= :pass)");
+						query.setDouble("username", number);
+						query.setString("pass", password);
+						return (User)query.uniqueResult();
+			
+					} catch (NumberFormatException e) {
+			
+
+						Query query = session.createQuery("from User where (userEmailId= :username and userPassword= :pass)");
+						query.setString("username", useremailId);
+						query.setString("pass", password);
+						return (User)query.uniqueResult();
+					
+					}
+		}
+		catch (Exception e) {
+		e.printStackTrace();
+			return null;
+		}
 	}
 
 	public boolean addUser(User user) {
@@ -66,6 +93,7 @@ public class UserDaoImpl implements UserDao {
 			flag = true;
 		} catch (Exception e) {
 			flag = false;
+			e.printStackTrace();
 		}
 
 		return flag;
@@ -79,6 +107,7 @@ public class UserDaoImpl implements UserDao {
 			session.update(user);
 			flag = true;
 		} catch (Exception e) {
+			e.printStackTrace();
 			flag = false;
 		}
 		return flag;
@@ -89,6 +118,7 @@ public class UserDaoImpl implements UserDao {
 		try {
 			return (User) sessionFactory.getCurrentSession().get(User.class, userId);
 		} catch (Exception e) {
+			e.printStackTrace();
 			return null;
 		}
 	}
@@ -97,8 +127,22 @@ public class UserDaoImpl implements UserDao {
 		try {
 			return (List<User>) sessionFactory.getCurrentSession().createQuery("from User").list();
 		} catch (Exception ex) {
+			ex.printStackTrace();
 			return null;
 		}
 	}
+
+	@Override
+	public User getUserByUserPhoneNumber(Long nummber) {
+		try {
+			Session session = sessionFactory.getCurrentSession();
+			Query query = session.createQuery("from User where userPhoneNumber= :pnumber");
+			query.setDouble("pnumber", nummber);
+			return (User) query.uniqueResult();
+
+		} catch (Exception e) {
+			e.printStackTrace();
+			return null;
+		}	}
 
 }

@@ -100,9 +100,9 @@ public class BlogDaoImpl implements BlogDao {
 	public List<Blog> getAllBlog(String userId) {
 		try {
 			Session session = sessionFactory.getCurrentSession();
-			Query query = session.createQuery("from Blog (where userEmailId = :userid and blogStatus= :active ) ");
-			query.setParameter("userid", userId);
-			query.setParameter("active", "active");
+			Query query = session.createQuery("from Blog where userEmailId = :userid and blogStatus= :active ");
+			query.setString("userid", userId);
+			query.setString("active", "active");
 			List<Blog> blog = (List<Blog>) query.list();
 			return blog;
 		} catch (Exception ex) {
